@@ -1,23 +1,24 @@
 package gorelic
 
 import (
-	metrics "github.com/yvasiyarov/go-metrics"
-	"github.com/yvasiyarov/newrelic_platform_go"
 	"net/http"
 	"time"
+
+	metrics "github.com/yvasiyarov/go-metrics"
+	"github.com/yvasiyarov/newrelic_platform_go"
 )
 
 type tHTTPHandlerFunc func(http.ResponseWriter, *http.Request)
 type tHTTPHandler struct {
 	originalHandler     http.Handler
-	originalHandlerFunc tHTTPHandlerFunc
+	originalHandlerFunc http.HandlerFunc
 	isFunc              bool
 	timer               metrics.Timer
 }
 
 var httpTimer metrics.Timer
 
-func newHTTPHandlerFunc(h tHTTPHandlerFunc) *tHTTPHandler {
+func newHTTPHandlerFunc(h http.HandlerFunc) *tHTTPHandler {
 	return &tHTTPHandler{
 		isFunc:              true,
 		originalHandlerFunc: h,

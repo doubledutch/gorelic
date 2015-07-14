@@ -95,7 +95,7 @@ func (c resettableComponent) ClearSentData() {
 }
 
 //WrapHTTPHandlerFunc  instrument HTTP handler functions to collect HTTP metrics
-func (agent *Agent) WrapHTTPHandlerFunc(h tHTTPHandlerFunc) tHTTPHandlerFunc {
+func (agent *Agent) WrapHTTPHandlerFunc(h http.HandlerFunc) http.HandlerFunc {
 	agent.CollectHTTPStat = true
 	agent.initTimer()
 	return func(w http.ResponseWriter, req *http.Request) {
